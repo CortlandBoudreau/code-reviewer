@@ -4,7 +4,7 @@ An AI-powered code review tool that analyzes your code for security vulnerabilit
 
 Built with FastAPI, React, TypeScript, and the Anthropic Claude API.
 
-![Code Reviewer AI](icon.svg)
+# Code Reviewer AI <img src="icon.svg" width="40" height="40" align="center" />
 ![Code Reviewer Screenshot](screenshot.png)
 
 ## Features
