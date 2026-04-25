@@ -120,9 +120,13 @@ function App() {
     setResult(null)
 
     try {
+      console.log("Token:", import.meta.env.VITE_API_SECRET_TOKEN)
       const response = await fetch("http://127.0.0.1:8000/review", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${import.meta.env.VITE_API_SECRET_TOKEN}`
+        },
         body: JSON.stringify({ code, language }),
       })
       const data = await response.json()
@@ -162,7 +166,7 @@ function App() {
           <CardContent className="space-y-4">
 
             <div className="flex items-center gap-3">
-              <Select value={language} onValueChange={setLanguage}>
+              <Select value={language} onValueChange={(value) => value && setLanguage(value)}>
                 <SelectTrigger className="w-48">
                   <SelectValue placeholder="Language" />
                 </SelectTrigger>

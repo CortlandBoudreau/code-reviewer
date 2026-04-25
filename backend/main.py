@@ -1,15 +1,23 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel
 from dotenv import load_dotenv
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
+from pathlib import Path
 import anthropic
 import os
 import json
 
-load_dotenv(override=True)
+load_dotenv(dotenv_path=Path(__file__).parent / ".env", override=True)
+security = HTTPBearer()
+
+def verify_token(credentials: HTTPAuthorizationCredentials = Depends(security)):
+    token = os.getenv("API_SECRET_TOKEN")
+    if credentials.credentials != token:
+        raise HTTPException(status_code=403, detail="Unauthorized")
 
 app = FastAPI()
 
@@ -37,7 +45,7 @@ def read_root():
 
 @app.post("/review")
 @limiter.limit("5/minute")
-async def review_code(request: Request, body: ReviewRequest):
+async def review_code(request: Request, body: ReviewRequest, _: None = Depends(verify_token)):
     try:
         if len(body.code) > 10000:
             return {"error": "Code exceeds maximum length of 10,000 characters"}
