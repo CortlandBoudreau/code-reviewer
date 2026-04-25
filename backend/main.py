@@ -11,7 +11,8 @@ import anthropic
 import os
 import json
 
-load_dotenv(dotenv_path=Path(__file__).parent / ".env", override=True)
+env = os.getenv("ENV", "development")
+load_dotenv(dotenv_path=Path(__file__).parent / f".env.{env}", override=True)
 security = HTTPBearer()
 
 def verify_token(credentials: HTTPAuthorizationCredentials = Depends(security)):
