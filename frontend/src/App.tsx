@@ -120,8 +120,7 @@ function App() {
     setResult(null)
 
     try {
-      console.log("Token:", import.meta.env.VITE_API_SECRET_TOKEN)
-      const response = await fetch("http://127.0.0.1:8000/review", {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/review`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
