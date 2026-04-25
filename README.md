@@ -41,9 +41,11 @@ pip install fastapi uvicorn anthropic python-dotenv slowapi
 ```
 
 Create a `.env.development` file in the backend folder:
+~~~
 ANTHROPIC_API_KEY=your_api_key_here
 ANTHROPIC_MODEL=claude-haiku-4-5
 API_SECRET_TOKEN=your_secret_token_here
+~~~
 
 Start the backend:
 ```bash
@@ -53,9 +55,10 @@ $env:ENV="development"; uvicorn main:app --reload
 ### Frontend
 
 Create a `.env.local` file in the frontend folder:
+~~~
 VITE_API_SECRET_TOKEN=your_secret_token_here
 VITE_API_URL=http://127.0.0.1:8000
-
+~~~
 Then:
 ```bash
 cd frontend
