@@ -12,7 +12,9 @@ import os
 import json
 
 env = os.getenv("ENV", "development")
-load_dotenv(dotenv_path=Path(__file__).parent / f".env.{env}", override=True)
+env_file = Path(__file__).parent / f".env.{env}"
+if env_file.exists():
+    load_dotenv(dotenv_path=env_file, override=True)
 security = HTTPBearer()
 
 def verify_token(credentials: HTTPAuthorizationCredentials = Depends(security)):
